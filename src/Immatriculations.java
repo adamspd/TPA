@@ -167,14 +167,14 @@ public class Immatriculations {
     }
 
     /**
-     * private void insertNewRowImmatriculations(int immatriculationId, String immatriculation,
+     * private void insertNewRowImmatriculations(String immatriculation, String immatriculation,
      * String marque, String nom, int puissance, String longueur,
      * int nombrePlace, int nombrePorte, String couleur,
      * String occasion, int prix)
      * Cette méthode insère une nouvelle ligne dans la table Immatriculations.
      */
 
-    private void insertNewRowImmatriculations(int immatriculationId, String immatriculation,
+    private void insertNewRowImmatriculations(String immatriculation,
                                               String marque, String nom, int puissance, String longueur,
                                               int nombrePlace, int nombrePorte, String couleur,
                                               String occasion, int prix) {
@@ -255,7 +255,6 @@ public class Immatriculations {
                 while (val.hasMoreTokens()) {
                     immatriculationRecord.add(val.nextToken().toString());
                 }
-                int immatriculationId = Integer.parseInt(immatriculationRecord.get(0));
                 String immatriculation = immatriculationRecord.get(1);
                 String marque = immatriculationRecord.get(2);
                 String nom = immatriculationRecord.get(3);
@@ -267,13 +266,13 @@ public class Immatriculations {
                 String occasion = immatriculationRecord.get(9);
                 int prix = Integer.parseInt(immatriculationRecord.get(10));
 
-                System.out.println("immatriculationId=" + immatriculationId + " immatriculation=" + immatriculation + " marque=" + marque
+                System.out.println("immatriculation=" + immatriculation + " marque=" + marque
                         + " nom=" + nom + " puissance=" + puissance + " longueur=" + longueur
                         + " nombrePlace=" + nombrePlace + " nombrePorte=" + nombrePorte + " couleur=" + couleur
                         + " occasion=" + occasion + " prix=" + prix);
 
                 // Rajouter l'immatriculation dans le KVStore
-                this.insertNewRowImmatriculations(immatriculationId, immatriculation, marque, nom, puissance, longueur,
+                this.insertNewRowImmatriculations(immatriculation, marque, nom, puissance, longueur,
                         nombrePlace, nombrePorte, couleur, occasion, prix);
             }
         } catch (Exception e) {
@@ -306,11 +305,11 @@ public class Immatriculations {
     }
 
     /**
-     * private void getImmatriculationByKey (int immatriculationId)
+     * private void getImmatriculationByKey (String immatriculation)
      * Cette méthode permet de charger une ligne de la table immatriculation
      * connaissant sa clé
      */
-    public void getImmatriculationByKey(int immatriculationId) {
+    public void getImmatriculationByKey(String immatriculation) {
         StatementResult result = null;
         String statement = null;
 
@@ -323,7 +322,7 @@ public class Immatriculations {
             // the table using the CREATE TABLE DDL statement.
             Table tabImmatriculation = tableH.getTable(tableImmatriculations);
             PrimaryKey key = tabImmatriculation.createPrimaryKey();
-            key.put("immatriculationId", immatriculationId);
+            key.put("immatriculation", immatriculation);
 
             // Retrieve the row. This performs a store read operation.
             // Exception handling is skipped for this trivial example.
