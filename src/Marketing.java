@@ -1,6 +1,8 @@
 import oracle.kv.KVStore;
+
 import java.util.List;
 import java.util.Iterator;
+
 import oracle.kv.KVStoreConfig;
 import oracle.kv.KVStoreFactory;
 import oracle.kv.FaultException;
@@ -11,9 +13,12 @@ import oracle.kv.table.Row;
 import oracle.kv.table.PrimaryKey;
 import oracle.kv.ConsistencyException;
 import oracle.kv.RequestTimeoutException;
+
 import java.lang.Integer;
+
 import oracle.kv.table.TableIterator;
 import oracle.kv.table.EnumValue;
+
 import java.io.File;
 import java.io.BufferedReader;
 import java.io.File;
@@ -117,14 +122,14 @@ public class Marketing {
             System.out.println("Statement couldn't be executed, please retry: " + e);
         }
     }
-    
+
     /**
-		La méthode initMarketingTablesAndData permet :
-		- de supprimer les tables si elles existent
-		- de créer des tables
-		- Insérer des critères
-		- et charger les datas de marketing
-	**/
+     * La méthode initMarketingTablesAndData permet :
+     * - de supprimer les tables si elles existent
+     * - de créer des tables
+     * - Insérer des critères
+     * - et charger les datas de marketing
+     **/
 
     public void initMarketingTablesAndData(Marketing marketing) {
         marketing.dropTableMarketing();
@@ -171,9 +176,9 @@ public class Marketing {
      */
 
     private void insertNewRowMarketing(int age,
-            String sexe, int taux, 
-            String situationFamiliale, 
-            int nombreEnfants, boolean deuxiemeVoiture
+                                       String sexe, int taux,
+                                       String situationFamiliale,
+                                       int nombreEnfants, boolean deuxiemeVoiture
     ) {
         StatementResult result = null;
         String statement = null;
@@ -258,9 +263,7 @@ public class Marketing {
                 int nombreEnfants = Integer.parseInt(marketingRecord.get(4));
                 boolean deuxiemeVoiture = Boolean.parseBoolean(marketingRecord.get(5));
 
-                System.out.println("age=" + age + " sexe=" + sexe
-                        + " taux=" + taux + " situationFamiliale=" situationFamiliale
-                        + " nombreEnfants=" + nombreEnfants + " deuxiemeVoiture=" + deuxiemeVoiture);
+                System.out.println("age=" + age + " sexe=" + sexe + " taux=" + taux + " situationFamiliale=" + situationFamiliale + " nombreEnfants=" + nombreEnfants + " deuxiemeVoiture=" + deuxiemeVoiture);
 
                 // Rajouter marketing dans le KVStore
                 this.insertNewRowMarketing(age, sexe, taux, situationFamiliale, nombreEnfants,
@@ -327,11 +330,11 @@ public class Marketing {
     }
 
     /**
-     public void getMarketingRows()
-     Cette méthode permet de charger toutes les lignes de la table marketing
-     connaissant sa clé
+     * public void getMarketingRows()
+     * Cette méthode permet de charger toutes les lignes de la table marketing
+     * connaissant sa clé
      */
-    public void getMarketingRows(){
+    public void getMarketingRows() {
         StatementResult result = null;
         String statement = null;
         System.out.println("******************************** LISTING DES CLIENTS ******************************************* ");
@@ -353,20 +356,16 @@ public class Marketing {
                     Row marketingRow = iter.next();
                     displayMarketingRow(marketingRow);
                 }
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
-            }
-            finally {
+            } finally {
                 if (iter != null) {
                     iter.close();
                 }
             }
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             System.out.println("Invalid statement:\n" + e.getMessage());
-        }
-        catch (FaultException e) {
+        } catch (FaultException e) {
             System.out.println("Statement couldn't be executed, please retry: " + e);
         }
     }
