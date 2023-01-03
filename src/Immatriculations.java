@@ -30,7 +30,7 @@ import java.util.List;
 
 public class Immatriculations {
     private final KVStore store;
-    private final String dataPath = "/home/PIERREDAVID/projet_tpa/data/";
+    private final String dataPath = "/home/debian/tpa/files/csv";
     private final String myFile = "Immatriculations.csv";
     private final String tableImmatriculations = "IMMATRICULATIONS_SOPHIA2223_TPA_GROUPE_4";
 
