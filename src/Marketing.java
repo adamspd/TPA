@@ -256,7 +256,8 @@ public class Marketing {
                 while (val.hasMoreTokens()) {
                     marketingRecord.add(val.nextToken().toString());
                 }
-                int age = Integer.parseInt(marketingRecord.get(0));
+                System.out.println("marketingRecord : " + marketingRecord.toString());
+                /*int age = Integer.parseInt(marketingRecord.get(0));
                 String sexe = marketingRecord.get(1);
                 int taux = Integer.parseInt(marketingRecord.get(2));
                 String situationFamiliale = marketingRecord.get(3);
@@ -267,7 +268,7 @@ public class Marketing {
 
                 // Rajouter marketing dans le KVStore
                 this.insertNewRowMarketing(age, sexe, taux, situationFamiliale, nombreEnfants,
-                        deuxiemeVoiture);
+                        deuxiemeVoiture);*/
             }
         } catch (Exception e) {
             e.printStackTrace();
