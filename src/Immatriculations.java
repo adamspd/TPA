@@ -42,7 +42,7 @@ public class Immatriculations {
             Immatriculations immatriculations = new Immatriculations(args);
             immatriculations.initImmatriculationsTablesAndData(immatriculations);
 
-            immatriculations.getImmatriculationByKey("4231 HC 31");
+            // immatriculations.getImmatriculationByKey("4231 HC 31");
 
             immatriculations.getImmatriculationRows();
 
