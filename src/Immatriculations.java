@@ -152,7 +152,6 @@ public class Immatriculations {
     public void createTableImmatriculations() {
         String statement = null;
         statement = "create table " + tableImmatriculations + " ("
-                + "IMMATRICULATION_ID INTEGER,"
                 + "IMMATRICULATION STRING,"
                 + "MARQUE STRING,"
                 + "NOM STRING,"
@@ -163,7 +162,7 @@ public class Immatriculations {
                 + "COULEUR STRING,"
                 + "OCCASION STRING,"
                 + "PRIX INTEGER,"
-                + "PRIMARY KEY(IMMATRICULATION_ID))";
+                + "PRIMARY KEY(IMMATRICULATION))";
         executeDDL(statement);
     }
 
@@ -199,7 +198,6 @@ public class Immatriculations {
 
 
             // Create one row
-            immatriculationsRow.put("IMMATRICULATION_ID", immatriculationId);
             immatriculationsRow.put("IMMATRICULATION", immatriculation);
             immatriculationsRow.put("MARQUE", marque);
             immatriculationsRow.put("NOM", nom);
@@ -290,7 +288,6 @@ public class Immatriculations {
     private void displayImmatriculationRow(Row immatriculationRow) {
         System.out.println("========== DANS : displayImmatriculationRow =================");
 
-        Integer immatriculationId = immatriculationRow.get("IMMATRICULATION_ID").asInteger().get();
         String immatriculation = immatriculationRow.get("IMMATRICULATION").asString().get();
         String marque = immatriculationRow.get("MARQUE").asString().get();
         String nom = immatriculationRow.get("NOM").asString().get();
@@ -302,8 +299,7 @@ public class Immatriculations {
         String occasion = immatriculationRow.get("OCCASION").asString().get();
         Integer prix = immatriculationRow.get("PRIX").asInteger().get();
 
-        System.out.println("Immatriculation Row:{immatriculationId=" + immatriculationId
-                + " immatriculation=" + immatriculation + " marque=" + marque
+        System.out.println("Immatriculation Row:{immatriculation=" + immatriculation + " marque=" + marque
                 + " nom=" + nom + " puissance=" + puissance + " longueur=" + longueur
                 + " nombrePlace=" + nombrePlace + " nombrePorte=" + nombrePorte + " couleur=" + couleur
                 + " occasion=" + occasion + " prix=" + prix + "}");
