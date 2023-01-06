@@ -133,7 +133,7 @@ public class Clients_11 {
      **/
 
     public void initClientTablesAndData(Clients_11 client) {
-        client.dropTable(tableClient, store);
+        client.dropTable();
         client.createTableClient();
         // immatriculations.insertImmRows();
         client.loadClientDataFromFile(dataPath + myFile);
