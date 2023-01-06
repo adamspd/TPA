@@ -35,7 +35,7 @@ import java.util.List;
 
 public class Marketing {
     private final KVStore store;
-    private final String dataPath = "/home/debian/tpa/files/csv/";
+    private final String dataPath = "/home/ubuntu/tpa/files/csv/";
     private final String myFile = "Marketing.csv";
     private final String tableMarketing = "MARKETING_SOPHIA2223_TPA_GROUPE_4";
 
