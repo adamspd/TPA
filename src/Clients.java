@@ -32,7 +32,6 @@ import java.io.PrintWriter;
 import java.util.StringTokenizer;
 import java.util.ArrayList;
 import java.util.List;
-import SqlUtils;
 
 public class Clients {
     private final KVStore store;
@@ -69,6 +68,60 @@ public class Clients {
                 (new KVStoreConfig(storeName, hostName + ":" + hostPort));
     }
 
+    /**
+     * Affichage du résultat pour les commandes DDL (CREATE, ALTER, DROP)
+     */
+
+    private void displayResult(StatementResult result, String statement) {
+        System.out.println("===========================");
+        if (result.isSuccessful()) {
+            System.out.println("Statement was successful:\n\t" +
+                    statement);
+            System.out.println("Results:\n\t" + result.getInfo());
+        } else if (result.isCancelled()) {
+            System.out.println("Statement was cancelled:\n\t" +
+                    statement);
+        } else {
+            /**
+             * statement was not successful: may be in error, or may still
+             * be in progress.
+             */
+            if (result.isDone()) {
+                System.out.println("Statement failed:\n\t" + statement);
+                System.out.println("Problem:\n\t" +
+                        result.getErrorMessage());
+            } else {
+
+                System.out.println("Statement in progress:\n\t" +
+                        statement);
+                System.out.println("Status:\n\t" + result.getInfo());
+            }
+        }
+    }
+
+    /**
+     * public void executeDDL(String statement)
+     * méthode générique pour exécuter les commandes DDL
+     */
+    public void executeDDL(String statement) {
+        TableAPI tableAPI = store.getTableAPI();
+        StatementResult result = null;
+
+        System.out.println("****** Dans : executeDDL ********");
+        try {
+            /**
+             * Add a table to the database.
+             * Execute this statement asynchronously.
+             */
+
+            result = store.executeSync(statement);
+            displayResult(result, statement);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid statement:\n" + e.getMessage());
+        } catch (FaultException e) {
+            System.out.println("Statement couldn't be executed, please retry: " + e);
+        }
+    }
 
     /**
      * La méthode initClientTablesAndData permet :
@@ -79,10 +132,21 @@ public class Clients {
      **/
 
     public void initClientTablesAndData(Clients client) {
-    	SqlUtils.dropTable(tableClient, store);
+    	client.dropTable(tableClient, store);
         client.createTableClient();
         // immatriculations.insertImmRows();
         client.loadClientDataFromFile(dataPath + myFile);
+    }
+
+    /**
+     * public void dropTableMarketing()
+     * Methode de suppression de la table Marketing.
+     */
+    public void dropTable() {
+        String statement = null;
+
+        statement = "drop table " + tableClient;
+        executeDDL(statement);
     }
 
     /**
@@ -102,7 +166,7 @@ public class Clients {
                 + "DEUXIEME_VOITURE BOOLEAN,"
                 + "IMMATRICULATION STRING,"
                 + "PRIMARY KEY(ID))";
-        SqlUtils.executeDDL(statement, store);
+        executeDDL(statement);
     }
 
     /**
