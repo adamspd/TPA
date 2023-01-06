@@ -32,31 +32,32 @@ import java.io.PrintWriter;
 import java.util.StringTokenizer;
 import java.util.ArrayList;
 import java.util.List;
+import SqlUtils;
 
-public class Marketing {
+public class Clients_11 {
     private final KVStore store;
     private final String dataPath = "/home/ubuntu/tpa/files/csv/";
-    private final String myFile = "Marketing.csv";
-    private final String tableMarketing = "MARKETING_SOPHIA2223_TPA_GROUPE_4";
+    private final String myFile = "Clients_11.csv";
+    private final String tableClient = "CLIENT_SOPHIA2223_TPA_GROUPE_4";
 
     /**
      * Runs the DDL command line program.
      */
     public static void main(String[] args) {
         try {
-            Marketing marketing = new Marketing(args);
-            marketing.initMarketingTablesAndData(marketing);
+            Clients_11 client = new Clients_11(args);
+            client.initClientTablesAndData(client);
 
-            // marketing.getMarketingByKey("4231 HC 31");
+            // marketing.getClientByKey("4231 HC 31");
 
-            // marketing.getMarketingRows();
+            // client.getClientRows();
 
         } catch (RuntimeException e) {
             e.printStackTrace();
         }
     }
 
-    public Marketing(String[] argv) {
+    public Clients_11(String[] argv) {
 
         String storeName = "kvstore";
         String hostName = "localhost";
@@ -68,104 +69,40 @@ public class Marketing {
                 (new KVStoreConfig(storeName, hostName + ":" + hostPort));
     }
 
-    /**
-     * Affichage du résultat pour les commandes DDL (CREATE, ALTER, DROP)
-     */
-
-    private void displayResult(StatementResult result, String statement) {
-        System.out.println("===========================");
-        if (result.isSuccessful()) {
-            System.out.println("Statement was successful:\n\t" +
-                    statement);
-            System.out.println("Results:\n\t" + result.getInfo());
-        } else if (result.isCancelled()) {
-            System.out.println("Statement was cancelled:\n\t" +
-                    statement);
-        } else {
-            /**
-             * statement was not successful: may be in error, or may still
-             * be in progress.
-             */
-            if (result.isDone()) {
-                System.out.println("Statement failed:\n\t" + statement);
-                System.out.println("Problem:\n\t" +
-                        result.getErrorMessage());
-            } else {
-
-                System.out.println("Statement in progress:\n\t" +
-                        statement);
-                System.out.println("Status:\n\t" + result.getInfo());
-            }
-        }
-    }
 
     /**
-     * public void executeDDL(String statement)
-     * méthode générique pour exécuter les commandes DDL
-     */
-    public void executeDDL(String statement) {
-        TableAPI tableAPI = store.getTableAPI();
-        StatementResult result = null;
-
-        System.out.println("****** Dans : executeDDL ********");
-        try {
-            /**
-             * Add a table to the database.
-             * Execute this statement asynchronously.
-             */
-
-            result = store.executeSync(statement);
-            displayResult(result, statement);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Invalid statement:\n" + e.getMessage());
-        } catch (FaultException e) {
-            System.out.println("Statement couldn't be executed, please retry: " + e);
-        }
-    }
-
-    /**
-     * La méthode initMarketingTablesAndData permet :
+     * La méthode initClientTablesAndData permet :
      * - de supprimer les tables si elles existent
      * - de créer des tables
      * - Insérer des critères
      * - et charger les datas de marketing
      **/
 
-    public void initMarketingTablesAndData(Marketing marketing) {
-        marketing.dropTableMarketing();
-        marketing.createTableMarketing();
+    public void initClientTablesAndData(Clients_11 client) {
+        SqlUtils.dropTable(tableClient, store);
+        client.createTableClient();
         // immatriculations.insertImmRows();
-        marketing.loadMarketingDataFromFile(dataPath + myFile);
+        client.loadClientDataFromFile(dataPath + myFile);
     }
 
     /**
-     * public void dropTableMarketing()
-     * Methode de suppression de la table Marketing.
-     */
-    public void dropTableMarketing() {
-        String statement = null;
-
-        statement = "drop table " + tableMarketing;
-        executeDDL(statement);
-    }
-
-    /**
-     * public void createTableMarketing()
+     * public void createTableClient()
      * Methode de création de la table Marketing.
      */
 
-    public void createTableMarketing() {
+    public void createTableClient() {
         String statement = null;
-        statement = "create table " + tableMarketing + " ("
-                + "ID STRING, "
+        statement = "create table " + tableClient + " ("
+                + "ID STRING,"
                 + "AGE INTEGER,"
                 + "SEXE STRING,"
                 + "TAUX INTEGER,"
                 + "SITUATION_FAMILIALE STRING,"
                 + "NOMBRE_ENFANTS  INTEGER,"
                 + "DEUXIEME_VOITURE BOOLEAN,"
+                + "IMMATRICULATION STRING,"
                 + "PRIMARY KEY(ID))";
-        executeDDL(statement);
+        SqlUtils.executeDDL(statement, store);
     }
 
     /**
@@ -175,10 +112,9 @@ public class Marketing {
      * Cette méthode insère une nouvelle ligne dans la table Marketing.
      */
 
-    private void insertNewRowMarketing(int age,
-                                       String sexe, int taux,
-                                       String situationFamiliale,
-                                       int nombreEnfants, boolean deuxiemeVoiture
+    private void insertNewRowMarketing(
+            int age, String sexe, int taux, String situationFamiliale,
+            int nombreEnfants, boolean deuxiemeVoiture, String immatriculation
     ) {
         StatementResult result = null;
         String statement = null;
@@ -191,9 +127,9 @@ public class Marketing {
             // The name you give to getTable() must be identical
             // to the name that you gave the table when you created
             // the table using the CREATE TABLE DDL statement.
-            Table tabMarketing = tableH.getTable(tableMarketing);
+            Table tabClient = tableH.getTable(tableClient);
             // Get a Row instance
-            Row marketingRow = tabMarketing.createRow();
+            Row clientRow = tabClient.createRow();
             // Now put all of the cells in the row. This does NOT actually write the data to
             // the store.
 
@@ -202,19 +138,20 @@ public class Marketing {
 
 
             // Create one row
-            marketingRow.put("ID", uuid);
-            marketingRow.put("AGE", age);
-            marketingRow.put("SEXE", sexe);
-            marketingRow.put("TAUX", taux);
-            marketingRow.put("SITUATION_FAMILIALE", situationFamiliale);
-            marketingRow.put("NOMBRE_ENFANTS", nombreEnfants);
-            marketingRow.put("DEUXIEME_VOITURE", deuxiemeVoiture);
+            clientRow.put("ID", uuid);
+            clientRow.put("AGE", age);
+            clientRow.put("SEXE", sexe);
+            clientRow.put("TAUX", taux);
+            clientRow.put("SITUATION_FAMILIALE", situationFamiliale);
+            clientRow.put("NOMBRE_ENFANTS", nombreEnfants);
+            clientRow.put("DEUXIEME_VOITURE", deuxiemeVoiture);
+            clientRow.put("IMMATRICULATION", immatriculation);
 
 
             // Now write the table to the store.
             // "item" is the row's primary key. If we had not set that value,
             // this operation will throw an IllegalArgumentException.
-            tableH.put(marketingRow, null, null);
+            tableH.put(clientRow, null, null);
 
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid statement:\n" + e.getMessage());
@@ -225,24 +162,24 @@ public class Marketing {
     }
 
     /**
-     * void loadMarketingDataFromFile(String marketingDataFileName)
+     * void loadClientDataFromFile(String clientDataFileName)
      * cette methode permet de charger les data marketings depuis le fichier
      * appelé marketing.csv
      * Pour chaque ligne chargée, la
      * méthode insertNewRowmarketing sera appelée
      */
-    void loadMarketingDataFromFile(String marketingDataFileName) {
+    void loadClientDataFromFile(String clientDataFileName) {
         InputStreamReader ipsr;
         BufferedReader br = null;
         InputStream ips;
 
         // Variables pour stocker les données lues d'un fichier.
         String ligne;
-        System.out.println("********************************** Dans : loadMarketingDataFromFile *********************************");
+        System.out.println("********************************** Dans : loadClientDataFromFile *********************************");
 
         /* parcourir les lignes du fichier texte et découper chaque ligne */
         try {
-            ips = new FileInputStream(marketingDataFileName);
+            ips = new FileInputStream(clientDataFileName);
             ipsr = new InputStreamReader(ips);
             br = new BufferedReader(ipsr);
 
@@ -251,28 +188,31 @@ public class Marketing {
             // parcourir le fichier ligne par ligne et découper chaque ligne en
             // morceau séparé par le symbole ","
             while ((ligne = br.readLine()) != null) {
-                ArrayList<String> marketingRecord = new ArrayList<String>();
+                ArrayList<String> clientRecord = new ArrayList<String>();
                 StringTokenizer val = new StringTokenizer(ligne, ",");
                 while (val.hasMoreTokens()) {
-                    marketingRecord.add(val.nextToken().toString());
+                    clientRecord.add(val.nextToken().toString());
                 }
-                System.out.println("marketingRecord : " + marketingRecord.toString());
+                System.out.println("clientRecord : " + clientRecord.toString());
                 // skip the first line
-                if (marketingRecord.get(0).equals("age")) {
+                if (clientRecord.get(0).equals("age")) {
                     continue;
                 }
-                int age = Integer.parseInt(marketingRecord.get(0));
-                String sexe = marketingRecord.get(1);
-                int taux = Integer.parseInt(marketingRecord.get(2));
-                String situationFamiliale = marketingRecord.get(3);
-                int nombreEnfants = Integer.parseInt(marketingRecord.get(4));
-                boolean deuxiemeVoiture = Boolean.parseBoolean(marketingRecord.get(5));
+                int age = Integer.parseInt(clientRecord.get(0));
+                String sexe = clientRecord.get(1);
+                int taux = Integer.parseInt(clientRecord.get(2));
+                String situationFamiliale = clientRecord.get(3);
+                int nombreEnfants = Integer.parseInt(clientRecord.get(4));
+                boolean deuxiemeVoiture = Boolean.parseBoolean(clientRecord.get(5));
+                String immatriculation = clientRecord.get(6);
 
-                System.out.println("age=" + age + " sexe=" + sexe + " taux=" + taux + " situationFamiliale=" + situationFamiliale + " nombreEnfants=" + nombreEnfants + " deuxiemeVoiture=" + deuxiemeVoiture);
+                System.out.println("age=" + age + " sexe=" + sexe + " taux=" + taux
+                        + " situationFamiliale=" + situationFamiliale + " nombreEnfants=" + nombreEnfants
+                        + " deuxiemeVoiture=" + deuxiemeVoiture + " immatriculation=" + immatriculation);
 
                 // Rajouter marketing dans le KVStore
                 this.insertNewRowMarketing(age, sexe, taux, situationFamiliale, nombreEnfants,
-                        deuxiemeVoiture);
+                        deuxiemeVoiture, immatriculation);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -280,51 +220,53 @@ public class Marketing {
     }
 
     /**
-     * private void displayMarketingRow(Row marketingRow)
+     * private void displayClientRow(Row clientRow)
      * Cette méthode d'afficher une ligne de la table marketing.
      */
-    private void displayMarketingRow(Row marketingRow) {
-        System.out.println("========== DANS : displayMarketingRow =================");
+    private void displayClientRow(Row clientRow) {
+        System.out.println("========== DANS : displayClientRow =================");
 
-        String id = marketingRow.get("ID").asString().get();
-        String age = marketingRow.get("AGE").asString().get();
-        String sexe = marketingRow.get("SEXE").asString().get();
-        Integer taux = marketingRow.get("TAUX").asInteger().get();
-        String situationFamiliale = marketingRow.get("SITUATION_FAMILIALE").asString().get();
-        Integer nombreEnfants = marketingRow.get("NOMBRE_ENFANTS").asInteger().get();
-        Integer deuxiemeVoiture = marketingRow.get("DEUXIEME_VOITURE").asInteger().get();
+        String id = clientRow.get("ID").asString().get();
+        Integer age = clientRow.get("AGE").asInteger().get();
+        String sexe = clientRow.get("SEXE").asString().get();
+        Integer taux = clientRow.get("TAUX").asInteger().get();
+        String situationFamiliale = clientRow.get("SITUATION_FAMILIALE").asString().get();
+        Integer nombreEnfants = clientRow.get("NOMBRE_ENFANTS").asInteger().get();
+        Boolean deuxiemeVoiture = clientRow.get("DEUXIEME_VOITURE").asBoolean().get();
+        String immatriculation = clientRow.get("IMMATRICULATION").asString().get();
 
         System.out.println("Marketing Row:{id=" + id + " age=" + age
                 + " sexe=" + sexe + " taux=" + taux + " situationFamiliale=" + situationFamiliale
-                + " nombreEnfants=" + nombreEnfants + " deuxiemeVoiture=" + deuxiemeVoiture + "}");
+                + " nombreEnfants=" + nombreEnfants + " deuxiemeVoiture=" + deuxiemeVoiture
+                + " immatriculation=" + immatriculation + "}");
     }
 
     /**
-     * public void getMarketingByKey(String marketingId)
+     * public void getClientByKey(String clientId)
      * Cette méthode permet de charger une ligne de la table marketing
      * connaissant sa clé
      */
-    public void getMarketingByKey(String marketingId) {
+    public void getClientByKey(String clientId) {
         StatementResult result = null;
         String statement = null;
 
-        System.out.println("\n\n********************************** Dans : getMarketingByKey *********************************");
+        System.out.println("\n\n********************************** Dans : getClientByKey *********************************");
 
         try {
             TableAPI tableH = store.getTableAPI();
             // The name you give to getTable() must be identical
             // to the name that you gave the table when you created
             // the table using the CREATE TABLE DDL statement.
-            Table tabMarketing = tableH.getTable(tableMarketing);
-            PrimaryKey key = tabMarketing.createPrimaryKey();
-            key.put("id", marketingId);
+            Table tabClient = tableH.getTable(tableClient);
+            PrimaryKey key = tabClient.createPrimaryKey();
+            key.put("id", clientId);
 
             // Retrieve the row. This performs a store read operation.
             // Exception handling is skipped for this trivial example.
             Row row = tableH.get(key, null);
 
             // Now retrieve the individual fields from the row.
-            displayMarketingRow(row);
+            displayClientRow(row);
 
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid statement:\n" + e.getMessage());
@@ -335,11 +277,11 @@ public class Marketing {
     }
 
     /**
-     * public void getMarketingRows()
+     * public void getClientRows()
      * Cette méthode permet de charger toutes les lignes de la table marketing
      * connaissant sa clé
      */
-    public void getMarketingRows() {
+    public void getClientRows() {
         StatementResult result = null;
         String statement = null;
         System.out.println("******************************** LISTING DES CLIENTS ******************************************* ");
@@ -349,8 +291,8 @@ public class Marketing {
             // The name you give to getTable() must be identical
             // to the name that you gave the table when you created
             // the table using the CREATE TABLE DDL statement.
-            Table tabMarketing = tableH.getTable(tableMarketing);
-            PrimaryKey key = tabMarketing.createPrimaryKey();
+            Table tabClient = tableH.getTable(tableClient);
+            PrimaryKey key = tabClient.createPrimaryKey();
 
             // Exception handling is omitted, but in production code
             // ConsistencyException, RequestTimeException, and FaultException
@@ -358,8 +300,8 @@ public class Marketing {
             TableIterator<Row> iter = tableH.tableIterator(key, null, null);
             try {
                 while (iter.hasNext()) {
-                    Row marketingRow = iter.next();
-                    displayMarketingRow(marketingRow);
+                    Row clientRow = iter.next();
+                    displayClientRow(clientRow);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
