@@ -36,8 +36,8 @@ import SqlUtils;
 
 public class Clients {
     private final KVStore store;
-    private final String dataPath = "/home/debian/tpa/files/csv/";
-    private final String myFile = "Clients.csv";
+    private final String dataPath = "/home/ubuntu/tpa/files/csv/";
+    private final String myFile = "Clients_3.csv";
     private final String tableClient = "CLIENT_SOPHIA2223_TPA_GROUPE_4";
 
     /**
@@ -50,7 +50,7 @@ public class Clients {
 
             // marketing.getClientByKey("4231 HC 31");
 
-            client.getClientRows();
+            // client.getClientRows();
 
         } catch (RuntimeException e) {
             e.printStackTrace();
