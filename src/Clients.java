@@ -47,7 +47,7 @@ public class Clients {
             Clients client = new Clients(args);
             // client.initClientTablesAndData(client);
 
-            client.getClientByKey("8717-BQ-73");
+            client.getClientByKey("3334-UH-18");
 
             // client.getClientRows();
 
