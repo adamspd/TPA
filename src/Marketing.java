@@ -45,11 +45,11 @@ public class Marketing {
     public static void main(String[] args) {
         try {
             Marketing marketing = new Marketing(args);
-            marketing.initMarketingTablesAndData(marketing);
+            // marketing.initMarketingTablesAndData(marketing);
 
-            marketing.getMarketingByKey("5");
+            // marketing.getMarketingByKey("5");
 
-            // marketing.getMarketingRows();
+            marketing.getMarketingRows();
 
         } catch (RuntimeException e) {
             e.printStackTrace();
