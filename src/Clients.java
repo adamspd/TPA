@@ -50,6 +50,9 @@ public class Clients {
 
             client.getClientByKey("4262-UJ-81");
             client.getClientByKey("4560-JZ-64");
+            client.getClientByKey("5240-GJ-78");
+            client.getClientByKey("2634-XT-43");
+            client.getClientByKey("8333-CH-64");
 
             // client.getClientRows();
 
