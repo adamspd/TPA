@@ -264,7 +264,7 @@ public class Clients_11 {
                     continue;
                 }
                 // clean age before parsing, if age is empty, set it to 0
-                int age = 0;
+                int age = -999;
                 if (!clientRecord.get(0).equals("")) {
                     age = Integer.parseInt(clientRecord.get(0));
                 }
@@ -289,7 +289,7 @@ public class Clients_11 {
                         sexe = clientRecord.get(1);
                     }
                 }
-                int taux = 0;
+                int taux = -999;
                 if (!clientRecord.get(2).equals("")) {
                     taux = Integer.parseInt(clientRecord.get(2));
                 }
@@ -329,7 +329,7 @@ public class Clients_11 {
                         situationFamiliale = clientRecord.get(3);
                     }
                 }
-                int nombreEnfants = 0;
+                int nombreEnfants = -999;
                 if (!clientRecord.get(4).equals("")) {
                     nombreEnfants = Integer.parseInt(clientRecord.get(4));
                 }
