@@ -258,7 +258,9 @@ public class Clients {
                     clientRecord.add(val.nextToken().toString());
                 }
 
-                System.out.println("clientRecord : " + clientRecord.toString());
+                System.out.println("clientRecord taux: " + clientRecord.get(2).toString());
+                // print the 3rd element's type from the arraylist
+                System.out.println("clientRecord taux type: " + clientRecord.get(2).getClass().getName());
 
                 // skip the first line
                 if (clientRecord.get(0).equals("age")) {
@@ -303,33 +305,30 @@ public class Clients {
                  * if situationFamiliale is "Marié" or "Mariée", set it to "Marie(e)"
                  * if situationFamiliale is "Divorcé" or "Divorcée", set it to "Divorce(e)"
                  * if situationFamiliale is "Couple" and not "En couple" set it to "En couple"
+                 * for each situationFamiliale, set it to lower case before comparing
                  */
                 String situationFamiliale = "Not defined";
                 if (!clientRecord.get(3).equals("")) {
-                    if (clientRecord.get(3).equals("Célibataire")) {
+                    if (clientRecord.get(3).toLowerCase().equals("célibataire")) {
                         situationFamiliale = "Celibataire";
-                    } else if (clientRecord.get(3).equals("Marié(e)")) {
+                    } else if (clientRecord.get(3).toLowerCase().equals("marié(e)")) {
                         situationFamiliale = "Marie(e)";
-                    } else if (clientRecord.get(3).equals("Divorcé(e)")) {
+                    } else if (clientRecord.get(3).toLowerCase().equals("divorcé(e)")) {
                         situationFamiliale = "Divorce(e)";
-                    } else if (clientRecord.get(3).equals("Seul")) {
+                    } else if (clientRecord.get(3).toLowerCase().equals("seul") || clientRecord.get(3).toLowerCase().equals("seule")) {
                         situationFamiliale = "Celibataire";
-                    } else if (clientRecord.get(3).equals("Seule")) {
-                        situationFamiliale = "Celibataire";
-                    } else if (clientRecord.get(3).equals("Marié")) {
+                    } else if (clientRecord.get(3).toLowerCase().equals("marié") || clientRecord.get(3).toLowerCase().equals("mariée")) {
                         situationFamiliale = "Marie(e)";
-                    } else if (clientRecord.get(3).equals("Mariée")) {
-                        situationFamiliale = "Marie(e)";
-                    } else if (clientRecord.get(3).equals("Divorcé")) {
+                    } else if (clientRecord.get(3).toLowerCase().equals("divorcé") || clientRecord.get(3).toLowerCase().equals("divorcée")) {
                         situationFamiliale = "Divorce(e)";
-                    } else if (clientRecord.get(3).equals("Divorcée")) {
-                        situationFamiliale = "Divorce(e)";
-                    } else if (clientRecord.get(3).equals("Couple")) {
+                    } else if (clientRecord.get(3).toLowerCase().equals("couple") && !clientRecord.get(3).toLowerCase().equals("en couple")) {
                         situationFamiliale = "En couple";
                     } else {
                         situationFamiliale = clientRecord.get(3);
                     }
                 }
+
+
                 int nombreEnfants = -999;
                 if (!clientRecord.get(4).equals("")) {
                     nombreEnfants = Integer.parseInt(clientRecord.get(4));
