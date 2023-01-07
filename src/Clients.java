@@ -379,7 +379,6 @@ public class Clients {
     private void displayClientRow(Row clientRow) {
         System.out.println("========== DANS : displayClientRow =================");
 
-        String id = clientRow.get("ID").asString().get();
         Integer age = clientRow.get("AGE").asInteger().get();
         String sexe = clientRow.get("SEXE").asString().get();
         Integer taux = clientRow.get("TAUX").asInteger().get();
@@ -388,7 +387,7 @@ public class Clients {
         Boolean deuxiemeVoiture = clientRow.get("DEUXIEME_VOITURE").asBoolean().get();
         String immatriculation = clientRow.get("IMMATRICULATION").asString().get();
 
-        System.out.println("Marketing Row:{id=" + id + " age=" + age
+        System.out.println("Marketing Row:{age=" + age
                 + " sexe=" + sexe + " taux=" + taux + " situationFamiliale=" + situationFamiliale
                 + " nombreEnfants=" + nombreEnfants + " deuxiemeVoiture=" + deuxiemeVoiture
                 + " immatriculation=" + immatriculation + "}");
