@@ -266,8 +266,10 @@ public class Clients {
                 }
                 // clean age before parsing, if age is empty, set it to 0
                 int age = -999;
-                if (!clientRecord.get(0).equals("")) {
+                try{
                     age = Integer.parseInt(clientRecord.get(0));
+                } catch(NumberFormatException ex){
+                    age = -999;
                 }
 
                 /**
@@ -331,8 +333,10 @@ public class Clients {
 
 
                 int nombreEnfants = -999;
-                if (!clientRecord.get(4).equals("")) {
+                try{
                     nombreEnfants = Integer.parseInt(clientRecord.get(4));
+                } catch(NumberFormatException ex){
+                    nombreEnfants = -999;
                 }
 
                 boolean deuxiemeVoiture = false;
