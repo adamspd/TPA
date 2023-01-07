@@ -47,7 +47,7 @@ public class Clients {
             Clients client = new Clients(args);
             client.initClientTablesAndData(client);
 
-            // marketing.getClientByKey("4231 HC 31");
+            client.getClientByKey("8717-BQ-73");
 
             // client.getClientRows();
 
@@ -157,7 +157,6 @@ public class Clients {
     public void createTableClient() {
         String statement = null;
         statement = "create table " + tableClient + " ("
-                + "ID STRING,"
                 + "AGE INTEGER,"
                 + "SEXE STRING,"
                 + "TAUX INTEGER,"
@@ -165,7 +164,7 @@ public class Clients {
                 + "NOMBRE_ENFANTS  INTEGER,"
                 + "DEUXIEME_VOITURE BOOLEAN,"
                 + "IMMATRICULATION STRING,"
-                + "PRIMARY KEY(ID))";
+                + "PRIMARY KEY(IMMATRICULATION))";
         executeDDL(statement);
     }
 
@@ -202,7 +201,6 @@ public class Clients {
 
 
             // Create one row
-            clientRow.put("ID", uuid);
             clientRow.put("AGE", age);
             clientRow.put("SEXE", sexe);
             clientRow.put("TAUX", taux);
