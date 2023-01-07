@@ -47,7 +47,7 @@ public class Marketing {
             Marketing marketing = new Marketing(args);
             marketing.initMarketingTablesAndData(marketing);
 
-            // marketing.getMarketingByKey("4231 HC 31");
+            marketing.getMarketingByKey("5");
 
             // marketing.getMarketingRows();
 
@@ -175,7 +175,7 @@ public class Marketing {
      * Cette méthode insère une nouvelle ligne dans la table Marketing.
      */
 
-    private void insertNewRowMarketing(int age,
+    private void insertNewRowMarketing(String id, int age,
                                        String sexe, int taux,
                                        String situationFamiliale,
                                        int nombreEnfants, boolean deuxiemeVoiture
@@ -202,7 +202,7 @@ public class Marketing {
 
 
             // Create one row
-            marketingRow.put("ID", uuid);
+            marketingRow.put("ID", id);
             marketingRow.put("AGE", age);
             marketingRow.put("SEXE", sexe);
             marketingRow.put("TAUX", taux);
@@ -250,6 +250,7 @@ public class Marketing {
 
             // parcourir le fichier ligne par ligne et découper chaque ligne en
             // morceau séparé par le symbole ","
+            int lineNumber = 0;
             while ((ligne = br.readLine()) != null) {
                 ArrayList<String> clientRecord = new ArrayList<String>();
                 StringTokenizer val = new StringTokenizer(ligne, ",");
@@ -261,6 +262,8 @@ public class Marketing {
                 if (clientRecord.get(0).equals("age")) {
                     continue;
                 }
+                // increment the line number
+                lineNumber++;
                 // clean age before parsing, if age is empty, set it to 0
                 int age = -999;
                 try{
@@ -344,12 +347,14 @@ public class Marketing {
                     }
                 }
 
-                System.out.println("age=" + age + " sexe=" + sexe + " taux=" + taux
+                System.out.println("id=" + lineNumber + " age=" + age + " sexe=" + sexe + " taux=" + taux
                         + " situationFamiliale=" + situationFamiliale + " nombreEnfants=" + nombreEnfants
                         + " deuxiemeVoiture=" + deuxiemeVoiture);
 
                 // Rajouter marketing dans le KVStore
-                this.insertNewRowMarketing(age, sexe, taux, situationFamiliale, nombreEnfants,
+                // id = line number
+                String id = String.valueOf(lineNumber);
+                this.insertNewRowMarketing(id, age, sexe, taux, situationFamiliale, nombreEnfants,
                         deuxiemeVoiture);
             }
         } catch (Exception e) {
@@ -395,7 +400,7 @@ public class Marketing {
             // the table using the CREATE TABLE DDL statement.
             Table tabMarketing = tableH.getTable(tableMarketing);
             PrimaryKey key = tabMarketing.createPrimaryKey();
-            key.put("id", marketingId);
+            key.put("ID", marketingId);
 
             // Retrieve the row. This performs a store read operation.
             // Exception handling is skipped for this trivial example.
