@@ -263,20 +263,105 @@ public class Clients_11 {
                 if (clientRecord.get(0).equals("age")) {
                     continue;
                 }
-                int age = Integer.parseInt(clientRecord.get(0));
-                String sexe = clientRecord.get(1);
-                int taux = Integer.parseInt(clientRecord.get(2));
-                String situationFamiliale = clientRecord.get(3);
-                int nombreEnfants = Integer.parseInt(clientRecord.get(4));
-                boolean deuxiemeVoiture = Boolean.parseBoolean(clientRecord.get(5));
-                String immatriculation = clientRecord.get(6);
+                // clean age before parsing, if age is empty, set it to 0
+                int age = 0;
+                if (!clientRecord.get(0).equals("")) {
+                    age = Integer.parseInt(clientRecord.get(0));
+                }
+
+                /**
+                 * clean sexe before parsing, if sexe is empty, set it to ""
+                 * if sexe is "Masculin", set it to "M",if sexe is "Feminin", set it to "F"
+                 * if sexe is "Homme", set it to "M",if sexe is "Femme", set it to "F"
+                 */
+
+                String sexe = "";
+                if (!clientRecord.get(1).equals("")) {
+                    if (clientRecord.get(1).equals("Masculin")) {
+                        sexe = "M";
+                    } else if (clientRecord.get(1).equals("Feminin")) {
+                        sexe = "F";
+                    } else if (clientRecord.get(1).equals("Homme")) {
+                        sexe = "M";
+                    } else if (clientRecord.get(1).equals("Femme")) {
+                        sexe = "F";
+                    } else {
+                        sexe = clientRecord.get(1);
+                    }
+                }
+                int taux = 0;
+                if (!clientRecord.get(2).equals("")) {
+                    taux = Integer.parseInt(clientRecord.get(2));
+                }
+                /**
+                 * if situationFamiliale is empty, set it to ""
+                 * if situationFamiliale is "Célibataire", set it to "Celibataire"
+                 * if situationFamiliale is "Marié(e)", set it to "Marie(e)"
+                 * if situationFamiliale is "Divorcé(e)", set it to "Divorce(e)"
+                 * if situationFamiliale is "Seul" or "Seule", set it to "Celibataire"
+                 * if situationFamiliale is "Marié" or "Mariée", set it to "Marie(e)"
+                 * if situationFamiliale is "Divorcé" or "Divorcée", set it to "Divorce(e)"
+                 * if situationFamiliale is "Couple" and not "En couple" set it to "En couple"
+                 */
+                String situationFamiliale = "";
+                if (!clientRecord.get(3).equals("")) {
+                    if (clientRecord.get(3).equals("Célibataire")) {
+                        situationFamiliale = "Celibataire";
+                    } else if (clientRecord.get(3).equals("Marié(e)")) {
+                        situationFamiliale = "Marie(e)";
+                    } else if (clientRecord.get(3).equals("Divorcé(e)")) {
+                        situationFamiliale = "Divorce(e)";
+                    } else if (clientRecord.get(3).equals("Seul")) {
+                        situationFamiliale = "Celibataire";
+                    } else if (clientRecord.get(3).equals("Seule")) {
+                        situationFamiliale = "Celibataire";
+                    } else if (clientRecord.get(3).equals("Marié")) {
+                        situationFamiliale = "Marie(e)";
+                    } else if (clientRecord.get(3).equals("Mariée")) {
+                        situationFamiliale = "Marie(e)";
+                    } else if (clientRecord.get(3).equals("Divorcé")) {
+                        situationFamiliale = "Divorce(e)";
+                    } else if (clientRecord.get(3).equals("Divorcée")) {
+                        situationFamiliale = "Divorce(e)";
+                    } else if (clientRecord.get(3).equals("Couple")) {
+                        situationFamiliale = "En couple";
+                    } else {
+                        situationFamiliale = clientRecord.get(3);
+                    }
+                }
+                int nombreEnfants = 0;
+                if (!clientRecord.get(4).equals("")) {
+                    nombreEnfants = Integer.parseInt(clientRecord.get(4));
+                }
+
+                boolean deuxiemeVoiture = false;
+                if (!clientRecord.get(5).equals("")) {
+                    if (clientRecord.get(5).equals("true")) {
+                        deuxiemeVoiture = true;
+                    } else {
+                        deuxiemeVoiture = false;
+                    }
+                }
+                // if immatriculation is empty, set it to ""
+                // replace in between spaces by "-"
+                // don't add "-" at the beginning or at the end of the string
+                String immatriculation = "";
+                if (!clientRecord.get(6).equals("")) {
+                    immatriculation = clientRecord.get(6).replaceAll("\\s+", "-");
+                    if (immatriculation.startsWith("-")) {
+                        immatriculation = immatriculation.substring(1);
+                    }
+                    if (immatriculation.endsWith("-")) {
+                        immatriculation = immatriculation.substring(0, immatriculation.length() - 1);
+                    }
+                }
 
                 System.out.println("age=" + age + " sexe=" + sexe + " taux=" + taux
                         + " situationFamiliale=" + situationFamiliale + " nombreEnfants=" + nombreEnfants
                         + " deuxiemeVoiture=" + deuxiemeVoiture + " immatriculation=" + immatriculation);
 
                 // Rajouter marketing dans le KVStore
-                this.insertNewRowMarketing(age, sexe, taux, situationFamiliale, nombreEnfants,
+                this.insertNewRowClient(age, sexe, taux, situationFamiliale, nombreEnfants,
                         deuxiemeVoiture, immatriculation);
             }
         } catch (Exception e) {

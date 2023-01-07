@@ -238,7 +238,7 @@ public class Marketing {
 
         // Variables pour stocker les données lues d'un fichier.
         String ligne;
-        System.out.println("********************************** Dans : loadMarketingDataFromFile *********************************");
+        System.out.println("********************************** Dans : loadClientDataFromFile *********************************");
 
         /* parcourir les lignes du fichier texte et découper chaque ligne */
         try {
@@ -251,24 +251,99 @@ public class Marketing {
             // parcourir le fichier ligne par ligne et découper chaque ligne en
             // morceau séparé par le symbole ","
             while ((ligne = br.readLine()) != null) {
-                ArrayList<String> marketingRecord = new ArrayList<String>();
+                ArrayList<String> clientRecord = new ArrayList<String>();
                 StringTokenizer val = new StringTokenizer(ligne, ",");
                 while (val.hasMoreTokens()) {
-                    marketingRecord.add(val.nextToken().toString());
+                    clientRecord.add(val.nextToken().toString());
                 }
-                System.out.println("marketingRecord : " + marketingRecord.toString());
+                System.out.println("clientRecord : " + clientRecord.toString());
                 // skip the first line
-                if (marketingRecord.get(0).equals("age")) {
+                if (clientRecord.get(0).equals("age")) {
                     continue;
                 }
-                int age = Integer.parseInt(marketingRecord.get(0));
-                String sexe = marketingRecord.get(1);
-                int taux = Integer.parseInt(marketingRecord.get(2));
-                String situationFamiliale = marketingRecord.get(3);
-                int nombreEnfants = Integer.parseInt(marketingRecord.get(4));
-                boolean deuxiemeVoiture = Boolean.parseBoolean(marketingRecord.get(5));
+                // clean age before parsing, if age is empty, set it to 0
+                int age = 0;
+                if (!clientRecord.get(0).equals("")) {
+                    age = Integer.parseInt(clientRecord.get(0));
+                }
 
-                System.out.println("age=" + age + " sexe=" + sexe + " taux=" + taux + " situationFamiliale=" + situationFamiliale + " nombreEnfants=" + nombreEnfants + " deuxiemeVoiture=" + deuxiemeVoiture);
+                /**
+                 * clean sexe before parsing, if sexe is empty, set it to ""
+                 * if sexe is "Masculin", set it to "M",if sexe is "Feminin", set it to "F"
+                 * if sexe is "Homme", set it to "M",if sexe is "Femme", set it to "F"
+                 */
+
+                String sexe = "";
+                if (!clientRecord.get(1).equals("")) {
+                    if (clientRecord.get(1).equals("Masculin")) {
+                        sexe = "M";
+                    } else if (clientRecord.get(1).equals("Feminin")) {
+                        sexe = "F";
+                    } else if (clientRecord.get(1).equals("Homme")) {
+                        sexe = "M";
+                    } else if (clientRecord.get(1).equals("Femme")) {
+                        sexe = "F";
+                    } else {
+                        sexe = clientRecord.get(1);
+                    }
+                }
+                int taux = 0;
+                if (!clientRecord.get(2).equals("")) {
+                    taux = Integer.parseInt(clientRecord.get(2));
+                }
+                /**
+                 * if situationFamiliale is empty, set it to ""
+                 * if situationFamiliale is "Célibataire", set it to "Celibataire"
+                 * if situationFamiliale is "Marié(e)", set it to "Marie(e)"
+                 * if situationFamiliale is "Divorcé(e)", set it to "Divorce(e)"
+                 * if situationFamiliale is "Seul" or "Seule", set it to "Celibataire"
+                 * if situationFamiliale is "Marié" or "Mariée", set it to "Marie(e)"
+                 * if situationFamiliale is "Divorcé" or "Divorcée", set it to "Divorce(e)"
+                 * if situationFamiliale is "Couple" and not "En couple" set it to "En couple"
+                 */
+                String situationFamiliale = "";
+                if (!clientRecord.get(3).equals("")) {
+                    if (clientRecord.get(3).equals("Célibataire")) {
+                        situationFamiliale = "Celibataire";
+                    } else if (clientRecord.get(3).equals("Marié(e)")) {
+                        situationFamiliale = "Marie(e)";
+                    } else if (clientRecord.get(3).equals("Divorcé(e)")) {
+                        situationFamiliale = "Divorce(e)";
+                    } else if (clientRecord.get(3).equals("Seul")) {
+                        situationFamiliale = "Celibataire";
+                    } else if (clientRecord.get(3).equals("Seule")) {
+                        situationFamiliale = "Celibataire";
+                    } else if (clientRecord.get(3).equals("Marié")) {
+                        situationFamiliale = "Marie(e)";
+                    } else if (clientRecord.get(3).equals("Mariée")) {
+                        situationFamiliale = "Marie(e)";
+                    } else if (clientRecord.get(3).equals("Divorcé")) {
+                        situationFamiliale = "Divorce(e)";
+                    } else if (clientRecord.get(3).equals("Divorcée")) {
+                        situationFamiliale = "Divorce(e)";
+                    } else if (clientRecord.get(3).equals("Couple")) {
+                        situationFamiliale = "En couple";
+                    } else {
+                        situationFamiliale = clientRecord.get(3);
+                    }
+                }
+                int nombreEnfants = 0;
+                if (!clientRecord.get(4).equals("")) {
+                    nombreEnfants = Integer.parseInt(clientRecord.get(4));
+                }
+
+                boolean deuxiemeVoiture = false;
+                if (!clientRecord.get(5).equals("")) {
+                    if (clientRecord.get(5).equals("true")) {
+                        deuxiemeVoiture = true;
+                    } else {
+                        deuxiemeVoiture = false;
+                    }
+                }
+
+                System.out.println("age=" + age + " sexe=" + sexe + " taux=" + taux
+                        + " situationFamiliale=" + situationFamiliale + " nombreEnfants=" + nombreEnfants
+                        + " deuxiemeVoiture=" + deuxiemeVoiture);
 
                 // Rajouter marketing dans le KVStore
                 this.insertNewRowMarketing(age, sexe, taux, situationFamiliale, nombreEnfants,
