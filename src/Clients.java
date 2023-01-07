@@ -258,9 +258,7 @@ public class Clients {
                     clientRecord.add(val.nextToken().toString());
                 }
 
-                System.out.println("clientRecord taux: " + clientRecord.get(2).toString());
-                // print the 3rd element's type from the arraylist
-                System.out.println("clientRecord taux type: " + clientRecord.get(2).getClass().getName());
+                System.out.println("clientRecord taux: " + clientRecord.toString());
 
                 // skip the first line
                 if (clientRecord.get(0).equals("age")) {
