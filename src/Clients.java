@@ -46,7 +46,7 @@ public class Clients {
     public static void main(String[] args) {
         try {
             Clients client = new Clients(args);
-            client.initClientTablesAndData(client);
+            // client.initClientTablesAndData(client);
 
             client.getClientByKey("34262-UJ-81");
 
@@ -380,7 +380,7 @@ public class Clients {
     private void displayClientRow(Row clientRow) {
         System.out.println("========== DANS : displayClientRow =================");
 
-        Integer age = clientRow.get("AGE").asInteger().get();
+        /*Integer age = clientRow.get("AGE").asInteger().get();
         String sexe = clientRow.get("SEXE").asString().get();
         Integer taux = clientRow.get("TAUX").asInteger().get();
         String situationFamiliale = clientRow.get("SITUATION_FAMILIALE").asString().get();
@@ -391,7 +391,9 @@ public class Clients {
         System.out.println("Marketing Row:{age=" + age
                 + " sexe=" + sexe + " taux=" + taux + " situationFamiliale=" + situationFamiliale
                 + " nombreEnfants=" + nombreEnfants + " deuxiemeVoiture=" + deuxiemeVoiture
-                + " immatriculation=" + immatriculation + "}");
+                + " immatriculation=" + immatriculation + "}");*/
+
+        System.out.println("Marketing Row:" + clientRow.toJsonString(true));
     }
 
     /**
