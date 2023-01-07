@@ -45,7 +45,7 @@ public class Clients {
     public static void main(String[] args) {
         try {
             Clients client = new Clients(args);
-            client.initClientTablesAndData(client);
+            // client.initClientTablesAndData(client);
 
             client.getClientByKey("8717-BQ-73");
 
@@ -412,7 +412,7 @@ public class Clients {
             // the table using the CREATE TABLE DDL statement.
             Table tabClient = tableH.getTable(tableClient);
             PrimaryKey key = tabClient.createPrimaryKey();
-            key.put("id", clientId);
+            key.put("IMMATRICULATION", clientId);
 
             // Retrieve the row. This performs a store read operation.
             // Exception handling is skipped for this trivial example.
