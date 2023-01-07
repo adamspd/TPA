@@ -262,18 +262,18 @@ public class Marketing {
                     continue;
                 }
                 // clean age before parsing, if age is empty, set it to 0
-                int age = 0;
+                int age = null;
                 if (!clientRecord.get(0).equals("")) {
                     age = Integer.parseInt(clientRecord.get(0));
                 }
 
                 /**
-                 * clean sexe before parsing, if sexe is empty, set it to ""
+                 * clean sexe before parsing, if sexe is empty, set it to "Not defined"
                  * if sexe is "Masculin", set it to "M",if sexe is "Feminin", set it to "F"
                  * if sexe is "Homme", set it to "M",if sexe is "Femme", set it to "F"
                  */
 
-                String sexe = "";
+                String sexe = "Not defined";
                 if (!clientRecord.get(1).equals("")) {
                     if (clientRecord.get(1).equals("Masculin")) {
                         sexe = "M";
@@ -287,7 +287,7 @@ public class Marketing {
                         sexe = clientRecord.get(1);
                     }
                 }
-                int taux = 0;
+                int taux = null;
                 if (!clientRecord.get(2).equals("")) {
                     taux = Integer.parseInt(clientRecord.get(2));
                 }
@@ -301,7 +301,7 @@ public class Marketing {
                  * if situationFamiliale is "Divorcé" or "Divorcée", set it to "Divorce(e)"
                  * if situationFamiliale is "Couple" and not "En couple" set it to "En couple"
                  */
-                String situationFamiliale = "";
+                String situationFamiliale = "Not defined";
                 if (!clientRecord.get(3).equals("")) {
                     if (clientRecord.get(3).equals("Célibataire")) {
                         situationFamiliale = "Celibataire";
