@@ -369,7 +369,7 @@ public class Marketing {
     private void displayMarketingRow(Row marketingRow) {
         System.out.println("========== DANS : displayMarketingRow =================");
 
-        String id = marketingRow.get("ID").asString().get();
+        /*String id = marketingRow.get("ID").asString().get();
         String age = marketingRow.get("AGE").asString().get();
         String sexe = marketingRow.get("SEXE").asString().get();
         Integer taux = marketingRow.get("TAUX").asInteger().get();
@@ -379,7 +379,8 @@ public class Marketing {
 
         System.out.println("Marketing Row:{id=" + id + " age=" + age
                 + " sexe=" + sexe + " taux=" + taux + " situationFamiliale=" + situationFamiliale
-                + " nombreEnfants=" + nombreEnfants + " deuxiemeVoiture=" + deuxiemeVoiture + "}");
+                + " nombreEnfants=" + nombreEnfants + " deuxiemeVoiture=" + deuxiemeVoiture + "}");*/
+        System.out.println("Marketing Row:" + clientRow.toJsonString(true));
     }
 
     /**
