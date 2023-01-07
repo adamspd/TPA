@@ -36,8 +36,8 @@ import java.util.List;
 public class Clients {
     private final KVStore store;
     private final String dataPath = "/home/ubuntu/tpa/files/csv/";
-    // private final String myFile = "Clients_3.csv";
-    private final String myFile = "Clients_11.csv";
+    private final String myFile = "Clients_3.csv";
+    // private final String myFile = "Clients_11.csv";
     private final String tableClient = "CLIENT_SOPHIA2223_TPA_GROUPE_4";
 
     /**
@@ -48,11 +48,11 @@ public class Clients {
             Clients client = new Clients(args);
             client.initClientTablesAndData(client);
 
-            /*client.getClientByKey("4262-UJ-81");
+            client.getClientByKey("4262-UJ-81");
             client.getClientByKey("4560-JZ-64");
             client.getClientByKey("5240-GJ-78");
             client.getClientByKey("2634-XT-43");
-            client.getClientByKey("8333-CH-64");*/
+            client.getClientByKey("8333-CH-64");
 
             // client.getClientRows();
 
@@ -137,8 +137,8 @@ public class Clients {
      **/
 
     public void initClientTablesAndData(Clients client) {
-        client.dropTable();
-        client.createTableClient();
+        // client.dropTable();
+        // client.createTableClient();
         client.loadClientDataFromFile(dataPath + myFile);
     }
 
