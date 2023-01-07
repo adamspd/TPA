@@ -263,18 +263,18 @@ public class Clients {
                     continue;
                 }
                 // clean age before parsing, if age is empty, set it to 0
-                int age = 0;
+                int age = null;
                 if (!clientRecord.get(0).equals("")) {
                     age = Integer.parseInt(clientRecord.get(0));
                 }
 
                 /**
-                 * clean sexe before parsing, if sexe is empty, set it to ""
+                 * clean sexe before parsing, if sexe is empty, set it to "Not defined"
                  * if sexe is "Masculin", set it to "M",if sexe is "Feminin", set it to "F"
                  * if sexe is "Homme", set it to "M",if sexe is "Femme", set it to "F"
                  */
 
-                String sexe = "";
+                String sexe = "Not defined";
                 if (!clientRecord.get(1).equals("")) {
                     if (clientRecord.get(1).equals("Masculin")) {
                         sexe = "M";
@@ -288,12 +288,12 @@ public class Clients {
                         sexe = clientRecord.get(1);
                     }
                 }
-                int taux = 0;
+                int taux = null;
                 if (!clientRecord.get(2).equals("")) {
                     taux = Integer.parseInt(clientRecord.get(2));
                 }
                 /**
-                 * if situationFamiliale is empty, set it to ""
+                 * if situationFamiliale is empty, set it to "Not defined"
                  * if situationFamiliale is "Célibataire", set it to "Celibataire"
                  * if situationFamiliale is "Marié(e)", set it to "Marie(e)"
                  * if situationFamiliale is "Divorcé(e)", set it to "Divorce(e)"
@@ -302,7 +302,7 @@ public class Clients {
                  * if situationFamiliale is "Divorcé" or "Divorcée", set it to "Divorce(e)"
                  * if situationFamiliale is "Couple" and not "En couple" set it to "En couple"
                  */
-                String situationFamiliale = "";
+                String situationFamiliale = "Not defined";
                 if (!clientRecord.get(3).equals("")) {
                     if (clientRecord.get(3).equals("Célibataire")) {
                         situationFamiliale = "Celibataire";
@@ -328,7 +328,7 @@ public class Clients {
                         situationFamiliale = clientRecord.get(3);
                     }
                 }
-                int nombreEnfants = 0;
+                int nombreEnfants = null;
                 if (!clientRecord.get(4).equals("")) {
                     nombreEnfants = Integer.parseInt(clientRecord.get(4));
                 }
@@ -341,10 +341,10 @@ public class Clients {
                         deuxiemeVoiture = false;
                     }
                 }
-                // if immatriculation is empty, set it to ""
+                // if immatriculation is empty, set it to "Not defined"
                 // replace in between spaces by "-"
                 // don't add "-" at the beginning or at the end of the string
-                String immatriculation = "";
+                String immatriculation = "Not defined";
                 if (!clientRecord.get(6).equals("")) {
                     immatriculation = clientRecord.get(6).replaceAll("\\s+", "-");
                     if (immatriculation.startsWith("-")) {
