@@ -397,7 +397,7 @@ public class Clients {
                 + " nombreEnfants=" + nombreEnfants + " deuxiemeVoiture=" + deuxiemeVoiture
                 + " immatriculation=" + immatriculation + "}");*/
 
-        System.out.println("Marketing Row:" + clientRow.toJsonString(true));
+        System.out.println("Client Row:" + clientRow.toJsonString(true));
     }
 
     /**
