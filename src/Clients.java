@@ -293,9 +293,12 @@ public class Clients {
                     }
                 }
                 int taux = -999;
-                if (!clientRecord.get(2).equals("")) {
+                try{
                     taux = Integer.parseInt(clientRecord.get(2));
+                } catch(NumberFormatException ex){
+                    taux = -999;
                 }
+
                 /**
                  * if situationFamiliale is empty, set it to "Not defined"
                  * if situationFamiliale is "Célibataire", set it to "Celibataire"
