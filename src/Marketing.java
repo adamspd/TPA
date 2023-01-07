@@ -380,7 +380,7 @@ public class Marketing {
         System.out.println("Marketing Row:{id=" + id + " age=" + age
                 + " sexe=" + sexe + " taux=" + taux + " situationFamiliale=" + situationFamiliale
                 + " nombreEnfants=" + nombreEnfants + " deuxiemeVoiture=" + deuxiemeVoiture + "}");*/
-        System.out.println("Marketing Row:" + clientRow.toJsonString(true));
+        System.out.println("Marketing Row:" + marketingRow.toJsonString(true));
     }
 
     /**
