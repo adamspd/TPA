@@ -257,7 +257,7 @@ public class Clients {
                 while (val.hasMoreTokens()) {
                     clientRecord.add(val.nextToken().toString());
                 }
-                System.out.println("clientRecord : " + clientRecord.toString());
+
                 // skip the first line
                 if (clientRecord.get(0).equals("age")) {
                     continue;
@@ -355,9 +355,10 @@ public class Clients {
                     }
                 }
 
-                System.out.println("age=" + age + " sexe=" + sexe + " taux=" + taux
+                System.out.println("clientRecord : " + clientRecord.toString());
+                /*System.out.println("age=" + age + " sexe=" + sexe + " taux=" + taux
                         + " situationFamiliale=" + situationFamiliale + " nombreEnfants=" + nombreEnfants
-                        + " deuxiemeVoiture=" + deuxiemeVoiture + " immatriculation=" + immatriculation);
+                        + " deuxiemeVoiture=" + deuxiemeVoiture + " immatriculation=" + immatriculation);*/
 
                 // Rajouter marketing dans le KVStore
                 this.insertNewRowClient(age, sexe, taux, situationFamiliale, nombreEnfants,
