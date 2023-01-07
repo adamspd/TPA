@@ -262,7 +262,7 @@ public class Marketing {
                     continue;
                 }
                 // clean age before parsing, if age is empty, set it to 0
-                int age = null;
+                int age = -999;
                 if (!clientRecord.get(0).equals("")) {
                     age = Integer.parseInt(clientRecord.get(0));
                 }
@@ -287,7 +287,7 @@ public class Marketing {
                         sexe = clientRecord.get(1);
                     }
                 }
-                int taux = null;
+                int taux = -999;
                 if (!clientRecord.get(2).equals("")) {
                     taux = Integer.parseInt(clientRecord.get(2));
                 }
@@ -327,7 +327,7 @@ public class Marketing {
                         situationFamiliale = clientRecord.get(3);
                     }
                 }
-                int nombreEnfants = 0;
+                int nombreEnfants = -999;
                 if (!clientRecord.get(4).equals("")) {
                     nombreEnfants = Integer.parseInt(clientRecord.get(4));
                 }
