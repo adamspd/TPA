@@ -46,13 +46,13 @@ public class Clients {
     public static void main(String[] args) {
         try {
             Clients client = new Clients(args);
-            // client.initClientTablesAndData(client);
+            client.initClientTablesAndData(client);
 
-            client.getClientByKey("4262-UJ-81");
+            /*client.getClientByKey("4262-UJ-81");
             client.getClientByKey("4560-JZ-64");
             client.getClientByKey("5240-GJ-78");
             client.getClientByKey("2634-XT-43");
-            client.getClientByKey("8333-CH-64");
+            client.getClientByKey("8333-CH-64");*/
 
             // client.getClientRows();
 
@@ -137,9 +137,8 @@ public class Clients {
      **/
 
     public void initClientTablesAndData(Clients client) {
-        // client.dropTable();
-        // client.createTableClient();
-        // immatriculations.insertImmRows();
+        client.dropTable();
+        client.createTableClient();
         client.loadClientDataFromFile(dataPath + myFile);
     }
 
