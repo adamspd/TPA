@@ -266,7 +266,7 @@ public class Clients {
                 if (clientRecord.get(0).equals("age")) {
                     continue;
                 }
-                // clean age before parsing, if age is empty, set it to 0
+                // clean age before parsing, if age is empty, set it to -999
                 int age = -999;
                 try{
                     age = Integer.parseInt(clientRecord.get(0));
