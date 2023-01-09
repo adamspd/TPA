@@ -38,7 +38,7 @@ public class Tpa {
     private final String dataPath = "/home/ubuntu/tpa/files/csv/";
     private final String file_client3 = "Clients_3.csv";
     private final String file_client11 = "Clients_11.csv";
-    private final String file_marketing = "Marketing.csv"
+    private final String file_marketing = "Marketing.csv";
     private final String tableClient = "CLIENT_TPA_GROUPE_4";
     private final String tableMarketing = "MARKETING_TPA_GROUPE_4";
 
