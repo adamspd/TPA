@@ -141,6 +141,8 @@ public class Tpa {
      **/
 
     public void initClientTablesAndData(Tpa client) {
+        client.dropTable("CLIENT_SOPHIA2223_TPA_GROUPE_4");
+        client.dropTable("MARKETING_SOPHIA2223_TPA_GROUPE_4");
         client.dropTable(tableClient);
         client.createTableClient();
         client.loadClientDataFromFile(dataPath + file_client3);
@@ -384,10 +386,10 @@ public class Tpa {
 
                 /**
                  * if situationFamiliale is empty, set it to "Not defined"
-                 * if situationFamiliale is "Célibataire", set it to "Celibataire"
+                 * if situationFamiliale is "Célibataire", set it to "Célibataire"
                  * if situationFamiliale is "Marié(e)", set it to "Marie(e)"
                  * if situationFamiliale is "Divorcé(e)", set it to "Divorce(e)"
-                 * if situationFamiliale is "Seul" or "Seule", set it to "Celibataire"
+                 * if situationFamiliale is "Seul" or "Seule", set it to "Célibataire"
                  * if situationFamiliale is "Marié" or "Mariée", set it to "Marie(e)"
                  * if situationFamiliale is "Divorcé" or "Divorcée", set it to "Divorce(e)"
                  * if situationFamiliale is "Couple" and not "En couple" set it to "En couple"
@@ -396,13 +398,13 @@ public class Tpa {
                 String situationFamiliale = "Not defined";
                 if (!clientRecord.get(3).equals("")) {
                     if (clientRecord.get(3).toLowerCase().equals("célibataire")) {
-                        situationFamiliale = "Celibataire";
+                        situationFamiliale = "Célibataire";
                     } else if (clientRecord.get(3).toLowerCase().equals("marié(e)")) {
                         situationFamiliale = "Marie(e)";
                     } else if (clientRecord.get(3).toLowerCase().equals("divorcé(e)")) {
                         situationFamiliale = "Divorce(e)";
                     } else if (clientRecord.get(3).toLowerCase().equals("seul") || clientRecord.get(3).toLowerCase().equals("seule")) {
-                        situationFamiliale = "Celibataire";
+                        situationFamiliale = "Célibataire";
                     } else if (clientRecord.get(3).toLowerCase().equals("marié") || clientRecord.get(3).toLowerCase().equals("mariée")) {
                         situationFamiliale = "Marie(e)";
                     } else if (clientRecord.get(3).toLowerCase().equals("divorcé") || clientRecord.get(3).toLowerCase().equals("divorcée")) {
@@ -534,10 +536,10 @@ public class Tpa {
 
                 /**
                  * if situationFamiliale is empty, set it to "Not defined"
-                 * if situationFamiliale is "Célibataire", set it to "Celibataire"
+                 * if situationFamiliale is "Célibataire", set it to "Célibataire"
                  * if situationFamiliale is "Marié(e)", set it to "Marie(e)"
                  * if situationFamiliale is "Divorcé(e)", set it to "Divorce(e)"
-                 * if situationFamiliale is "Seul" or "Seule", set it to "Celibataire"
+                 * if situationFamiliale is "Seul" or "Seule", set it to "Célibataire"
                  * if situationFamiliale is "Marié" or "Mariée", set it to "Marie(e)"
                  * if situationFamiliale is "Divorcé" or "Divorcée", set it to "Divorce(e)"
                  * if situationFamiliale is "Couple" and not "En couple" set it to "En couple"
@@ -546,13 +548,13 @@ public class Tpa {
                 String situationFamiliale = "Not defined";
                 if (!clientRecord.get(3).equals("")) {
                     if (clientRecord.get(3).toLowerCase().equals("célibataire")) {
-                        situationFamiliale = "Celibataire";
+                        situationFamiliale = "Célibataire";
                     } else if (clientRecord.get(3).toLowerCase().equals("marié(e)")) {
                         situationFamiliale = "Marie(e)";
                     } else if (clientRecord.get(3).toLowerCase().equals("divorcé(e)")) {
                         situationFamiliale = "Divorce(e)";
                     } else if (clientRecord.get(3).toLowerCase().equals("seul") || clientRecord.get(3).toLowerCase().equals("seule")) {
-                        situationFamiliale = "Celibataire";
+                        situationFamiliale = "Célibataire";
                     } else if (clientRecord.get(3).toLowerCase().equals("marié") || clientRecord.get(3).toLowerCase().equals("mariée")) {
                         situationFamiliale = "Marie(e)";
                     } else if (clientRecord.get(3).toLowerCase().equals("divorcé") || clientRecord.get(3).toLowerCase().equals("divorcée")) {
