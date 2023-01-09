@@ -596,11 +596,11 @@ public class Tpa {
     }
 
     /**
-     * private void displayClientRow(Row clientRow)
+     * private void diplayRow(Row row)
      * Cette méthode d'afficher une ligne de la table marketing.
      */
-    private void displayClientRow(Row row) {
-        System.out.println("========== DANS : displayClientRow =================");
+    private void diplayRow(Row row) {
+        System.out.println("========== DANS : diplayRow =================");
 
         /*Integer age = clientRow.get("AGE").asInteger().get();
         String sexe = clientRow.get("SEXE").asString().get();
@@ -643,7 +643,7 @@ public class Tpa {
             Row row = tableH.get(key, null);
 
             // Now retrieve the individual fields from the row.
-            displayClientRow(row);
+            diplayRow(row);
 
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid statement:\n" + e.getMessage());
@@ -678,7 +678,7 @@ public class Tpa {
             try {
                 while (iter.hasNext()) {
                     Row clientRow = iter.next();
-                    displayClientRow(clientRow);
+                    diplayRow(clientRow);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -719,7 +719,7 @@ public class Tpa {
             Row row = tableH.get(key, null);
 
             // Now retrieve the individual fields from the row.
-            displayMarketingRow(row);
+            diplayRow(row);
 
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid statement:\n" + e.getMessage());
@@ -754,7 +754,7 @@ public class Tpa {
             try {
                 while (iter.hasNext()) {
                     Row marketingRow = iter.next();
-                    displayMarketingRow(marketingRow);
+                    diplayRow(marketingRow);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
