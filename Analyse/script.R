@@ -13,6 +13,7 @@ clients$X2eme.voiture <- as.logical(clients$X2eme.voiture)
 
 summary(clients)
 
+
 ######  Variable $age ######
 
 # Suppression des valeurs NA
