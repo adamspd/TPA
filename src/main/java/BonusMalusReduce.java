@@ -6,9 +6,6 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class BonusMalusReduce extends Reducer<Text, Text, Text, Text> {
     // La fonction REDUCE elle-même. Les arguments : la clef key (d'un type générique K), un Iterable de toutes les valeurs
