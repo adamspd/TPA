@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Install Spark
+
+# Abort on any error
+set -Eeuo pipefail
+SPARK_HOME=/usr/local/spark
+# Import utils
+source /home/ubuntu/tpa/scripts/utils.sh
+
+SPARK_VERSION="spark-3.3.1-bin-hadoop3"
+
+cd /usr/local
+
+__log_info 'Remove previous Spark installation'
+rm -rf "${SPARK_HOME:?}" "${SPARK_VERSION:?}"
+
+if [[ ! -f "${SPARK_VERSION}.tgz" ]]; then
+    __log_info 'Download Spark (~285M)'
+    wget --progress=dot:giga "https://dlcdn.apache.org/spark/spark-3.3.1/${SPARK_VERSION}.tgz"
+fi
+
+__log_info 'Untar Spark (~285M)'
+tar zxf "${SPARK_VERSION}.tgz"
+ln -sf "${SPARK_VERSION}" "${SPARK_HOME}"
+
+__log_info 'Update the Spark configuration'
+cp -f /home/ubuntu/tpa/config/spark/* "${SPARK_HOME:?}/conf"
+
+__log_info 'Give vagrant user ownership over Spark'
+chown -R ubuntu:ubuntu "${SPARK_VERSION}"
+
+__log_info 'Installed Spark with success'
