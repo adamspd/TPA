@@ -4,7 +4,7 @@
   --
   Projet Hadoop: analyse de données sur les émissions de CO2.
   --
-  Co2Driver.java: classe driver (contient le main du programme).
+  Co2Driver.java: classe driver (contient la main du programme).
 */
 
 import org.apache.hadoop.fs.Path;
@@ -14,10 +14,9 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.util.GenericOptionsParser;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.io.IntWritable;
 
-// Note classe Driver (contient le main du programme Hadoop).
-public class Co2Driver {
+// Note classe Driver (contient la main du programme Hadoop).
+public class BonusMalusDriver {
     public static void main(String[] args) throws Exception {
         // Créé un object de configuration Hadoop.
         Configuration conf = new Configuration();
@@ -25,18 +24,18 @@ public class Co2Driver {
         // Permet à Hadoop de lire ses arguments génériques, récupère les arguments restants dans ourArgs.
         String[] ourArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
 
-        // Obtient un nouvel objet Job: une tâche Hadoop. On fourni la configuration Hadoop ainsi qu'une description
+        // Obtient un nouvel objet Job : une tâche Hadoop. On a fourni la configuration Hadoop ainsi qu'une description
         // textuelle de la tâche.
         Job job = Job.getInstance(conf, "Analyse de données sur les émissions de CO2 v1.0");
 
         // Défini les classes driver, map et reduce.
-        job.setJarByClass(Co2Driver.class);
-        job.setMapperClass(Co2Map.class);
-        job.setReducerClass(Co2Reduce.class);
+        job.setJarByClass(BonusMalusDriver.class);
+        job.setMapperClass(BonusMalusMap.class);
+        job.setReducerClass(BonusMalusReduce.class);
 
-        // Défini types clefs/valeurs de notre programme Hadoop.
+        // Définis types clefs/valeurs de notre programme Hadoop.
         job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(IntWritable.class);
+        job.setOutputValueClass(Text.class);
 
         // Défini les fichiers d'entrée du programme et le répertoire des résultats.
         // On se sert du premier et du deuxième argument restants pour permettre à l'utilisateur de les spécifier
