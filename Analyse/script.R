@@ -51,6 +51,7 @@ clients$sexe <- droplevels(clients$sexe)
 levels(clients$sexe)
 
 
+
 ######  Variable $taux ######
 
 # Visualisation des différentes valeurs qu'on trouve dans la variable taux
