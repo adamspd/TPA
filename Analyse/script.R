@@ -13,7 +13,6 @@ clients$X2eme.voiture <- as.logical(clients$X2eme.voiture)
 
 summary(clients)
 
-
 ######  Variable $age ######
 
 # Suppression des valeurs NA
@@ -169,3 +168,125 @@ immatriculations$voitureParCategories <- ifelse((immatriculations$longueur == "c
 #Merge deux fichiers immatriculations & clients
 immatriculations_clients <- merge(immatriculations, clients, by = "immatriculation")
 summary(immatriculations_clients)
+
+
+#Suppression des variable inutiles
+immatriculations_clients <- immatriculations_clients[,!names(immatriculations_clients)
+                                        %in% c("immatriculation",
+                                                "marque",
+                                                "nom",
+                                                "puissance",
+                                                "longueur",
+                                                "nbPlaces",
+                                                "nbPortes",
+                                                "couleur",
+                                                "occasion",
+                                                "prix" )]
+
+
+#Convertir les variable en Factor
+immatriculations_clients$voitureParCategories <- as.factor(immatriculations_clients$voitureParCategories)
+immatriculations_clients$age <- as.factor(immatriculations_clients$age)
+immatriculations_clients$sexe <- as.factor(immatriculations_clients$sexe)
+immatriculations_clients$taux <- as.factor(immatriculations_clients$taux)
+immatriculations_clients$situationFamiliale <- as.factor(immatriculations_clients$situationFamiliale)
+immatriculations_clients$nbEnfantsAcharge <- as.factor(immatriculations_clients$nbEnfantsAcharge)
+immatriculations_clients$X2eme.voiture <- as.factor(immatriculations_clients$X2eme.voiture)
+
+summary(immatriculations_clients)
+
+#Creation l'ensemble d'apprentissage + testes
+immatriculations_clients_training <- immatriculations_clients[1:61422,]
+immatriculations_clients_test <- immatriculations_clients[61423:88059,]
+
+
+
+#Apprentissage SVM
+svm_classifieur_1 <- svm(voitureParCategories~., immatriculations_clients_training, probability=TRUE)
+
+#Prediction sur l'ensemble de testes
+svm_classifieur_1_class <- predict(svm_classifieur_1, immatriculations_clients_test, type="response")
+
+#Probabilité pour chaque prédiction
+table(svm_classifieur_1_class)
+table(immatriculations_clients_test$voitureParCategories, svm_classifieur_1_class)
+
+#Taux precision = 0,719     #Taux erreur = 0,281
+
+#Calcule de L'AUC
+svm_classifieur_1_prob <- predict(svm_classifieur_1, immatriculations_clients_test, probability=TRUE)
+
+svm_classifieur_1_prob <- as.data.frame(attr(svm_classifieur_1_prob, "probabilities"))
+svm_classifieur_1_auc <-multiclass.roc(immatriculations_clients_test$voitureParCategories, svm_classifieur_1_prob)
+cat (svm_classifieur_1_auc)
+
+# AUC = 0.899
+
+
+
+#Apprentissage C50
+c_50_classifieur_2 <- C5.0(voitureParCategories ~., immatriculations_clients_training)
+#Prediction sur l'ensemble de testes
+c_50_classifieur_2_class <- predict(c_50_classifieur_2, immatriculations_clients_test, type="class")
+
+#Probabilité pour chaque prédiction
+table(c_50_classifieur_2_class)
+table(immatriculations_clients_test$voitureParCategories, c_50_classifieur_2_class)
+
+#Taux precision = 0,726     #Taux erreur = 0,274
+
+#Calcule de L'AUC
+c_50_classifieur_2_prob <- predict(c_50_classifieur_2, immatriculations_clients_test, type="prob")
+
+c_50_classifieur_2_auc <-multiclass.roc(immatriculations_clients_test$voitureParCategories, c_50_classifieur_2_prob)
+
+cat (c_50_classifieur_2_auc)
+
+# AUC = 0.898
+
+
+
+#Apprentissage Nnet
+nnet_classifieur_3<-nnet(voitureParCategories ~., immatriculations_clients_training, size=)
+
+#Prediction sur l'ensemble de testes
+nnet_classifieur_3_class <- predict(nnet_classifieur_3, immatriculations_clients_test, type="class")
+
+#Probabilité pour chaque prédiction
+table(nnet_classifieur_3_class)
+table(immatriculations_clients_test$voitureParCategories, nnet_classifieur_3_class)
+
+#Taux precision = 0,729     #Taux erreur = 0,271
+
+#Calcule de L'AUC
+nnet_classifieur_3_prob <- predict(nnet_classifieur_3, immatriculations_clients_test, type="raw")
+
+nnet_classifieur_3_auc <-multiclass.roc(immatriculations_clients_test$voitureParCategories, nnet_classifieur_3_prob)
+
+cat (nnet_classifieur_3_auc)
+
+# AUC = 0.902
+
+
+#Modele de prediction
+
+# Importation de fichier marketing.csv
+predictionMarketing <- read.csv("../Groupe_TPT_4/Marketing.csv", header = TRUE, sep = ",", dec = ".")
+
+predictionMarketing$situationFamiliale <- str_replace(predictionMarketing$situationFamiliale, "C\xe9libataire", "Celibataire")
+
+# Convertir au bon type
+predictionMarketing$age <- as.factor(predictionMarketing$age)
+predictionMarketing$sexe <- as.factor(predictionMarketing$sexe)
+predictionMarketing$taux <- as.factor(predictionMarketing$taux)
+predictionMarketing$situationFamiliale <- as.factor(predictionMarketing$situationFamiliale)
+predictionMarketing$nbEnfantsAcharge <- as.factor(predictionMarketing$nbEnfantsAcharge)
+predictionMarketing$X2eme.voiture <- as.factor(predictionMarketing$X2eme.voiture)
+
+# Application de prediction
+
+class.nnet <- predict(nnet_classifieur_3_class, predictionMarketing)
+categorie_voiture_predit <- data.frame(predictionMarketing, class.nnet)
+
+write.table(categorie_voiture_predit, file='categorie_voiture_predit', sep="\t", dec=".", row.names = )
+
